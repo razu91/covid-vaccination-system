@@ -40,6 +40,7 @@ class UserService
             'phone'=> $request['phone'],
             'scheduled_date' => $schedule_date,
             'vaccine_center_id' => $request['vaccine_center'],
+            'status' => 'scheduled'
         ]);
 
         return $user;
