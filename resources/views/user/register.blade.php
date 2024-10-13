@@ -8,7 +8,7 @@
     <div class="mb-3 text-center">
         <a class="btn btn-info" href="{{route('search.vaccination-status')}}" >Check Vaccination Status</a>
     </div>
-    @include('layout.errors')
+    @include('layouts.errors')
     <form action="{{route('register.store')}}" method="POST">
         @csrf
         <!-- Name -->
