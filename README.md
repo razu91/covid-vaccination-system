@@ -82,3 +82,27 @@ The COVID-19 Vaccination Registration System is a web-based platform developed i
    ```
    php artisan serve
    ```
+
+
+### Email Notification System
+
+A vaccine schedule date reminder email will automatically be sent to the user at 9 PM the day before the vaccination date.
+
+We use Laravel's **Notification System** along with a **queue worker** for sending emails. A Laravel command, ```send:vaccine-schedule-mail```, is scheduled to run every day at 9 PM.
+
+To send emails properly, we should run the following two commands:
+
+**Local Development Servicer**
+```
+ php artisan schedule:run
+ php artisan queue:work
+ ```
+ 
+ **CPanel (Setup Cron Job)**
+ 
+ ```
+ * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+
+ * * * * * cd /path-to-your-project && php artisan queue:work >> /dev/null 2>&1
+ ```
+ 
