@@ -106,3 +106,46 @@ To send emails properly, we should run the following two commands:
  * * * * * cd /path-to-your-project && php artisan queue:work >> /dev/null 2>&1
  ```
  
+ ### SMS Notifications
+
+Here use Laravel Notification system . We can easily implement Sms notification without modify current code. 
+
+Step 1 : Go to Notification class (**SendVaccineScheduleNotification**)
+
+Step 2 : Integrate any sms provider like (twillo/slack/nexmo)
+
+```
+composer require twilio/sdk
+```
+
+Step 3 : Add Channels for sms
+```
+    public function via(object $notifiable): array
+    {
+        return ['mail','sms']; // Add 'sms' here
+    }
+```
+
+Step 4 : Create SMS function toSms for send notification via sms
+```
+use Twilio\Rest\Client;
+
+public function toSms(object $notifiable)
+{
+    $name = $this->vaccine_user->name;
+    $date = date_format(date_create($this->vaccine_user->scheduled_date), 'd MD, Y');
+
+    $message = "Hello $name, your COVID vaccine is scheduled for $date.";
+
+    $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
+    $twilio->messages->create(
+        $notifiable->phone, // Your user's phone number
+        [
+            'from' => env('TWILIO_FROM'),
+            'body' => $message,
+        ]
+    );
+}
+```
+
+**Note: For sending mail or SMS, using a service class to handle the logic is considered good practice.**
