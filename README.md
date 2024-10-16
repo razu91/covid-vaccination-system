@@ -43,6 +43,12 @@ The COVID-19 Vaccination Registration System is a web-based platform developed i
 
    ```
 
+   **In .env file please set cache type is file**
+   
+   ```
+   CACHE_STORE=file // for small project file cache is better
+   ```
+
 5. **Generate Application Key**
    
    ```
