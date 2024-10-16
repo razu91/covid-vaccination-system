@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\VaccineCenter;
+use Illuminate\Support\Facades\Cache;
 
 class UserService
 {
@@ -15,8 +16,13 @@ class UserService
      */
     public function registerFormView()
     {
-        // Get all vaccine centers
-        return VaccineCenter::all();
+        // Cache key
+        $cacheKey = 'vaccine_centers';
+
+        // Get all vaccine centers from cache or database
+        return Cache::rememberForever($cacheKey, function () {
+            return VaccineCenter::all();
+        });
     }
 
 

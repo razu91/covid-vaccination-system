@@ -21,7 +21,7 @@ class VaccinationService{
        $cacheKey = 'user_vaccination_status_' . $nid;
 
        // Use the cache with a key, expire after 5 minutes, if not cached, execute the query
-        return Cache::remember($cacheKey, 1 * 60, function () use ($nid) {
+        return Cache::remember($cacheKey, 10 * 60, function () use ($nid) {
 
             // Find the user by their NID (National ID)
             $user = User::select('status', 'scheduled_date')->where('nid', $nid)->first();
